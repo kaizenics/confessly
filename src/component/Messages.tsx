@@ -1,10 +1,12 @@
+"use client"
+
 import { useState } from "react";
 import { Container } from "@/component/ui/Container";
 import { IoMdClose } from "react-icons/io";
 
 const messages = [
   {
-    text: "regards ko ni allana marie diha hehe",
+    text: "This is a message",
     date: "2021-10-10",
   },
   {
