@@ -1,13 +1,15 @@
 import Image from "next/image";
 import { Container } from "@/component/ui/Container";
 import { FcGoogle } from "react-icons/fc";
+import { Messages } from "@/component/Messages";
 import hearts from "@/assets/hearts.png";
-import { Separator } from '@/component/ui/Separator'
+
+
 
 export default function Home() {
   return (
     <main>
-       <Container className="container mx-auto flex flex-col">
+      <Container className="container mx-auto flex flex-col">
         <div className="flex">
           <div className="ml-12 mt-40">
             <h1 className="font-montserrat font-semibold text-[100px] bg-gradient-to-r from-red-300 to-red-500 bg-clip-text text-transparent">
@@ -29,7 +31,8 @@ export default function Home() {
           </div>
         </div>
       </Container>
-      <Separator/>
+
+     <Messages />
     </main>
   );
 }
