@@ -70,8 +70,7 @@ export const Header = () => {
                   Confession Wall
                 </h1>
                 <p className="font-montserrat font-regular text-white text-xl">
-                  Whisper your secrets. This Valentine&apos;s, love speaks
-                  anonymously.
+                  Sign in with your HCDC account to start sending messages anonymously
                 </p>
                 <button
                   className="font-montserrat font-semibold text-white text-md border-2 border-slate-600 bg-transparent px-4 py-3 rounded-md mt-7 flex items-center"
