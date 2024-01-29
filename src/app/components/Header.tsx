@@ -42,7 +42,7 @@ export const Header = () => {
       alert("Please enter a message");
       return;
     }
-  
+
     try {
       await addDoc(collection(db, "messages"), {
         name: user.displayName,
@@ -51,7 +51,6 @@ export const Header = () => {
         userId: user.uid,
       });
       setMessage("");
-      alert("Your message has been posted!");
     } catch (error) {
       console.error(error);
     }

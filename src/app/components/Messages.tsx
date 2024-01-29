@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { Container } from "~/app/components/ui/Container";
 import { IoMdClose } from "react-icons/io";
-import Skeleton from 'react-loading-skeleton';
 
 import { db } from "~/app/firebase";
 import { onSnapshot, collection } from "firebase/firestore";
@@ -18,7 +17,6 @@ type Messages = {
 export const Messages = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState("");
-  const [loading, setLoading] = useState(true);
   const [msgs, setMsgs] = useState<Messages[]>([]);
 
   const handleReadMore = (message: string) => {
@@ -36,7 +34,6 @@ export const Messages = () => {
       setMsgs(
         snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })) as Messages[]
       );
-      setLoading(false);
     });
   
     return () => unsubscribe();
