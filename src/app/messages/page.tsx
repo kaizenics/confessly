@@ -1,27 +1,27 @@
-
+"use client";
 
 import { useState, useEffect } from "react";
 import { Container } from "~/app/components/ui/Container";
+import { Header } from "~/app/components/Header";
 import { IoMdClose } from "react-icons/io";
-import Skeleton from 'react-loading-skeleton';
 
 import { db } from "~/app/firebase";
-import { onSnapshot, collection } from "firebase/firestore";
+import { onSnapshot, collection, query, where} from "firebase/firestore";
+import { UserAuth } from "~/context/AuthContext";
 
-type Messages = {
-  id: string;
-  text: string; 
-  date: string;
-  name: string;
-};
+type Message = {
+    id: string;
+    text: string;
+    date: string;
+  };
 
-export const Messages = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [selectedMessage, setSelectedMessage] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [msgs, setMsgs] = useState<Messages[]>([]);
+export default function MyMessages() {
+const [showModal, setShowModal] = useState(false);
+const [selectedMessage, setSelectedMessage] = useState("");
+const { user } = UserAuth();
+const [mymsgs, setMyMsgs] = useState<Message[]>([]);
 
-  const handleReadMore = (message: string) => {
+const handleReadMore = (message: string) => {
     setSelectedMessage(message);
     setShowModal(true);
   };
@@ -32,22 +32,30 @@ export const Messages = () => {
   };
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, "messages"), (snapshot) => {
-      setMsgs(
-        snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })) as Messages[]
-      );
-      setLoading(false);
-    });
+    if (user) {
+      const q = query(collection(db, "messages"), where("userId", "==", user.uid));
   
-    return () => unsubscribe();
-  }, []);
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        setMyMsgs(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }) as Message)
+        );
+      });
+  
+      return () => unsubscribe();
+    }
+  }, [user]);
+
 
   return (
-    <>
+    <main>
+        <Header />
       <Container className="container flex justify-center items-center px-6 xl:px-0">
         <div className="flex flex-col md:block lg:flex-row xl:flex-row justify-between items-center my-10">
           <div className="lg:mx-24 xl:mx-7 grid grid-cols-4 gap-5">
-            {msgs.map((message) => (
+            {mymsgs.map((message) => (
               <div
                 key={message.id}
                 className="w-[360px] h-[280px] box-border border-2 border-slate-600 bg-gray-900 flex flex-col justify-between items-center rounded-md"
@@ -91,6 +99,7 @@ export const Messages = () => {
           </div>
         </div>
       )}
-    </>
+    
+    </main>
   );
-};
+}   

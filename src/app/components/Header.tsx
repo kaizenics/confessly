@@ -1,12 +1,18 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import { Container } from "~/app/components/ui/Container";
 import { FcGoogle } from "react-icons/fc";
 import hearts from "~/assets/hearts.png";
+
+import { addDoc, collection } from "firebase/firestore";
 import { UserAuth } from "~/context/AuthContext";
-import { useEffect } from "react";
+import { db } from "~/app/firebase";
 
 export const Header = () => {
   const { user, googleSignIn, logOut } = UserAuth();
+  const [message, setMessage] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     if (user) {
@@ -31,19 +37,41 @@ export const Header = () => {
     }
   };
 
+  const handlePostMessage = async () => {
+    if (message.trim() === "") {
+      alert("Please enter a message");
+      return;
+    }
+  
+    try {
+      await addDoc(collection(db, "messages"), {
+        name: user.displayName,
+        text: message,
+        date: new Date().toLocaleDateString(),
+        userId: user.uid,
+      });
+      setMessage("");
+      alert("Your message has been posted!");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div>
-     <Container className="container mx-auto flex flex-col">
+      <Container className="container mx-auto flex flex-col">
         <div className="flex">
           <div className="ml-28 mt-40">
             {!user ? (
               <div>
-                <h1 className="font-montserrat font-semibold text-[95px] bg-gradient-to-r from-red-300 to-red-500 bg-clip-text text-transparent">
+                <h1 
+                onClick={() => router.push('/')}
+                className="font-montserrat font-semibold text-[95px] bg-gradient-to-r from-red-300 to-red-500 bg-clip-text text-transparent cursor-pointer">
                   Confession Wall
                 </h1>
-                <p className="font-montserrat font-regular text-white text-lg">
-                  Start sending anonymous messages now and discover the freedom
-                  of valentine{" "}
+                <p className="font-montserrat font-regular text-white text-xl">
+                Whisper your secrets. This Valentine's, love speaks anonymously.
+                
                 </p>
                 <button
                   className="font-montserrat font-semibold text-white text-md border-2 border-slate-600 bg-transparent px-4 py-3 rounded-md mt-7 flex items-center"
@@ -55,19 +83,33 @@ export const Header = () => {
               </div>
             ) : (
               <div>
-                 <p className="font-montserrat text-white text-2xl">Welcome, {user.displayName}!</p>
+                <p className="font-montserrat text-white text-2xl">
+                  Welcome, {user.displayName}!
+                </p>
                 <h1 className="font-montserrat font-semibold text-[95px] bg-gradient-to-r from-red-300 to-red-500 bg-clip-text text-transparent">
                   Confession Wall
                 </h1>
                 <textarea
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                   placeholder="Start putting messages here"
                   className="border-2 border-slate-600 bg-gray-900 font-montserrat font-regular  text-white w-[810px] h-[100px] rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-red-300 resize-none"
                 />
                 <div className="flex">
-                  <button className="font-montserrat font-semibold text-white text-md border-2 border-slate-600  bg-transparent px-4 py-3 rounded-md mt-2 flex items-center hover:text-gray-400 hover:border-slate-800">
+                  <button
+                    onClick={handlePostMessage}
+                    className="font-montserrat font-semibold text-white text-md border-2 border-slate-600  bg-transparent px-4 py-3 rounded-md mt-2 mr-2 flex items-center hover:text-gray-400 hover:border-slate-800"
+                  >
                     Post your message
                   </button>
-                  <button className="font-montserrat font-semibold text-white text-md border-2 border-slate-600 bg-transparent px-4 py-3 rounded-md mt-2 mx-2 flex items-center hover:text-gray-400 hover:border-slate-800">
+                  <button 
+                  onClick={() => router.push("/")}
+                  className="font-montserrat font-semibold text-white text-md border-2 border-slate-600 bg-transparent px-4 py-3 rounded-md mt-2 mr-2 flex items-center hover:text-gray-400 hover:border-slate-800">
+                    All
+                  </button>
+                  <button 
+                  onClick={() => router.push("/messages")}
+                  className="font-montserrat font-semibold text-white text-md border-2 border-slate-600 bg-transparent px-4 py-3 rounded-md mt-2 mr-2 flex items-center hover:text-gray-400 hover:border-slate-800">
                     My messages
                   </button>
                   <button
