@@ -70,7 +70,7 @@ export const Header = () => {
                   Confession Wall
                 </h1>
                 <p className="font-montserrat font-regular text-white text-xl">
-                  Whisper your secrets. This Valentine's, love speaks
+                  Whisper your secrets. This Valentine&apos;s, love speaks
                   anonymously.
                 </p>
                 <button
