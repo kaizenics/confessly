@@ -1,8 +1,8 @@
 import Image from "next/image";
-import { Container } from "@/component/ui/Container";
+import { Container } from "~/app/components/ui/Container";
 import { FcGoogle } from "react-icons/fc";
-import hearts from "@/assets/hearts.png";
-import { UserAuth } from "@/context/AuthContext";
+import hearts from "~/assets/hearts.png";
+import { UserAuth } from "~/context/AuthContext";
 import { useEffect } from "react";
 
 export const Header = () => {
@@ -33,7 +33,7 @@ export const Header = () => {
 
   return (
     <div>
-      <Container className="container mx-auto flex flex-col">
+     <Container className="container mx-auto flex flex-col">
         <div className="flex">
           <div className="ml-28 mt-40">
             {!user ? (
@@ -64,11 +64,14 @@ export const Header = () => {
                   className="border-2 border-slate-600 bg-gray-900 font-montserrat font-regular  text-white w-[810px] h-[100px] rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-red-300 resize-none"
                 />
                 <div className="flex">
-                  <button className="font-montserrat font-semibold text-white text-md border-2 border-slate-600 bg-transparent px-4 py-3 rounded-md mt-2 mr-1 flex items-center">
+                  <button className="font-montserrat font-semibold text-white text-md border-2 border-cyan-700 bg-transparent px-4 py-3 rounded-md mt-2 flex items-center hover:text-gray-400 hover:border-cyan-900">
                     Post your message
                   </button>
+                  <button className="font-montserrat font-semibold text-white text-md border-2 border-slate-600 bg-transparent px-4 py-3 rounded-md mt-2 mx-2 flex items-center hover:text-gray-400 hover:border-slate-800">
+                    My messages
+                  </button>
                   <button
-                    className="font-montserrat font-semibold text-red-500 text-md border-2 border-red-500 bg-transparent px-4 py-3 rounded-md mt-2 ml-1 flex items-center"
+                    className="font-montserrat font-semibold text-red-500 text-md border-2 border-red-500 bg-transparent px-4 py-3 rounded-md mt-2 flex items-center hover:text-red-900 hover:border-red-900"
                     onClick={handleLogout}
                   >
                     Log out

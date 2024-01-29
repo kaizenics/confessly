@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react";
-import { Container } from "@/component/ui/Container";
+import { Container } from "~/app/components/ui/Container";
 import { IoMdClose } from "react-icons/io";
 
 const messages = [

@@ -1,5 +1,5 @@
 
-import { Container } from "@/component/ui/Container";
+import { Container } from "~/app/components/ui/Container";
 
 export const Footer = () => {   
     return (

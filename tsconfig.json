@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -18,7 +19,15 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "~/*": [
+        "./src/*"
+      ],
+      "~/images/*": [
+        "./src/assets/images/*"
+      ],
+      "~/styles/*": [
+        "./src/assets/styles/*"
+      ],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

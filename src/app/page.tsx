@@ -1,10 +1,12 @@
 "use client";
 
-import { Header } from "@/component/Header";
-import { Messages } from "@/component/Messages";
-import { Footer } from "@/component/ui/Footer";
+import { Header } from "~/app/components/Header";
+import { Messages } from "~/app/components/Messages";
+import { Footer } from "~/app/components/Footer";
 
 export default function Home() {
+  
+
   return (
     <main>
       <Header />
