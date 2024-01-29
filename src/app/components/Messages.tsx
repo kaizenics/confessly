@@ -1,4 +1,4 @@
-
+"use client";
 
 import { useState, useEffect } from "react";
 import { Container } from "~/app/components/ui/Container";

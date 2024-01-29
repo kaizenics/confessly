@@ -63,14 +63,15 @@ export const Header = () => {
           <div className="ml-28 mt-40">
             {!user ? (
               <div>
-                <h1 
-                onClick={() => router.push('/')}
-                className="font-montserrat font-semibold text-[95px] bg-gradient-to-r from-red-300 to-red-500 bg-clip-text text-transparent cursor-pointer">
+                <h1
+                  onClick={() => router.push("/")}
+                  className="font-montserrat font-semibold text-[95px] bg-gradient-to-r from-red-300 to-red-500 bg-clip-text text-transparent cursor-pointer"
+                >
                   Confession Wall
                 </h1>
                 <p className="font-montserrat font-regular text-white text-xl">
-                Whisper your secrets. This Valentine's, love speaks anonymously.
-                
+                  Whisper your secrets. This Valentine's, love speaks
+                  anonymously.
                 </p>
                 <button
                   className="font-montserrat font-semibold text-white text-md border-2 border-slate-600 bg-transparent px-4 py-3 rounded-md mt-7 flex items-center"
@@ -101,14 +102,16 @@ export const Header = () => {
                   >
                     Post your message
                   </button>
-                  <button 
-                  onClick={() => router.push("/")}
-                  className="font-montserrat font-semibold text-white text-md border-2 border-slate-600 bg-transparent px-4 py-3 rounded-md mt-2 mr-2 flex items-center hover:text-gray-400 hover:border-slate-800">
+                  <button
+                    onClick={() => router.push("/")}
+                    className="font-montserrat font-semibold text-white text-md border-2 border-slate-600 bg-transparent px-4 py-3 rounded-md mt-2 mr-2 flex items-center hover:text-gray-400 hover:border-slate-800"
+                  >
                     All
                   </button>
-                  <button 
-                  onClick={() => router.push("/messages")}
-                  className="font-montserrat font-semibold text-white text-md border-2 border-slate-600 bg-transparent px-4 py-3 rounded-md mt-2 mr-2 flex items-center hover:text-gray-400 hover:border-slate-800">
+                  <button
+                    onClick={() => router.push("/messages")}
+                    className="font-montserrat font-semibold text-white text-md border-2 border-slate-600 bg-transparent px-4 py-3 rounded-md mt-2 mr-2 flex items-center hover:text-gray-400 hover:border-slate-800"
+                  >
                     My messages
                   </button>
                   <button
