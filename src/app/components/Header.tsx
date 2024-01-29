@@ -64,7 +64,7 @@ export const Header = () => {
                   className="border-2 border-slate-600 bg-gray-900 font-montserrat font-regular  text-white w-[810px] h-[100px] rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-red-300 resize-none"
                 />
                 <div className="flex">
-                  <button className="font-montserrat font-semibold text-white text-md border-2 border-cyan-700 bg-transparent px-4 py-3 rounded-md mt-2 flex items-center hover:text-gray-400 hover:border-cyan-900">
+                  <button className="font-montserrat font-semibold text-white text-md border-2 border-slate-600  bg-transparent px-4 py-3 rounded-md mt-2 flex items-center hover:text-gray-400 hover:border-slate-800">
                     Post your message
                   </button>
                   <button className="font-montserrat font-semibold text-white text-md border-2 border-slate-600 bg-transparent px-4 py-3 rounded-md mt-2 mx-2 flex items-center hover:text-gray-400 hover:border-slate-800">
