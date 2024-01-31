@@ -15,12 +15,7 @@ export const Footer = () => {
                 Niko Soriano © 2024 All Rights Reserved
               </p>
               <div className="flex font-montserrat text-md items-start text-[#dfdfdfdc] mb-20 whitespace-nowrap">
-              <a href="https://github.com/kaizenics/confessly/issues/new" target="_blank" rel="noopener noreferrer">
-                <p className="pl-4 font-regular hover:text-white hover:underline">Privacy Policy</p>
-                </a>
-                <a href="https://github.com/kaizenics/confessly/issues/new" target="_blank" rel="noopener noreferrer">
-                <p className="pl-4 font-regular hover:text-white hover:underline">Terms and Conditions</p>
-                </a>
+             
                <a href="https://github.com/kaizenics/confessly" target="_blank" rel="noopener noreferrer">
                 <p className="pl-4 font-semibold hover:text-white hover:underline">Contribute</p>
                 </a>

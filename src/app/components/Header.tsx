@@ -58,18 +58,18 @@ export const Header = () => {
 
   return (
     <div>
-      <Container className="container mx-auto flex flex-col">
-        <div className="flex">
-          <div className="ml-28 mt-40">
+      <Container className="container mx-auto">
+        <main className="flex justify-center items-center flex-row mt-28 mb-14 ">
+          <div>
             {!user ? (
               <div>
                 <h1
                   onClick={() => router.push("/")}
-                  className="font-montserrat font-semibold text-[95px] bg-gradient-to-r from-red-300 to-red-500 bg-clip-text text-transparent cursor-pointer"
+                  className="font-montserrat font-semibold lg:text-[80px] xl:text-[80px] bg-gradient-to-r from-red-300 to-red-500 bg-clip-text text-transparent cursor-pointer"
                 >
                   Confession Wall
                 </h1>
-                <p className="font-montserrat font-regular text-white text-xl">
+                <p className="font-montserrat font-regular text-white lg:text-lg xl:text-lg">
                   Sign in with your HCDC account to start sending messages anonymously
                 </p>
                 <button
@@ -82,9 +82,7 @@ export const Header = () => {
               </div>
             ) : (
               <div>
-                <p className="font-montserrat text-white text-2xl">
-                  Welcome, {user.displayName}!
-                </p>
+                <p className="font-montserrat text-white text-2xl">Welcome, {user.displayName}!</p>
                 <h1 className="font-montserrat font-semibold text-[95px] bg-gradient-to-r from-red-300 to-red-500 bg-clip-text text-transparent">
                   Confession Wall
                 </h1>
@@ -94,7 +92,7 @@ export const Header = () => {
                   placeholder="Start putting messages here"
                   className="border-2 border-slate-600 bg-gray-900 font-montserrat font-regular  text-white w-[810px] h-[100px] rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-red-300 resize-none"
                 />
-                <div className="flex">
+                <div className="flex justify-center">
                   <button
                     onClick={handlePostMessage}
                     className="font-montserrat font-semibold text-white text-md border-2 border-slate-600  bg-transparent px-4 py-3 rounded-md mt-2 mr-2 flex items-center hover:text-gray-400 hover:border-slate-800"
@@ -123,13 +121,11 @@ export const Header = () => {
               </div>
             )}
           </div>
-          <div className="p-28">
-            <div className="w-[400px] h-[400px]">
-              <Image src={hearts} alt="hearts" layout="responsive" />
-            </div>
+          <div className=" pl-14 -z-10">
+            <Image src={hearts} alt="hearts" width={370} height={370} layout="fixed" />
           </div>
-        </div>
-      </Container>
+        </main>
+        </Container>
     </div>
   );
 };

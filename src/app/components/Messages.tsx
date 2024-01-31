@@ -5,7 +5,7 @@ import { Container } from "~/app/components/ui/Container";
 import { IoMdClose } from "react-icons/io";
 
 import { db } from "~/app/firebase";
-import { onSnapshot, collection } from "firebase/firestore";
+import { onSnapshot, collection, orderBy, query } from "firebase/firestore";
 
 type Messages = {
   id: string;
@@ -30,7 +30,9 @@ export const Messages = () => {
   };
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, "messages"), (snapshot) => {
+    const q = query(collection(db, "messages"), orderBy("date", "asc"));
+  
+    const unsubscribe = onSnapshot(q, (snapshot) => {
       setMsgs(
         snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })) as Messages[]
       );
@@ -41,9 +43,9 @@ export const Messages = () => {
 
   return (
     <>
-      <Container className="container flex justify-center items-center px-6 xl:px-0">
-        <div className="flex flex-col md:block lg:flex-row xl:flex-row justify-between items-center my-10">
-          <div className="lg:mx-24 xl:mx-7 grid grid-cols-4 gap-5">
+      <Container className="container flex justify-center items-center">
+        <div className="flex flex-col md:block lg:flex-row xl:flex-row justify-between items-center my-14">
+          <div className="grid grid-cols-3 gap-8">
             {msgs.map((message) => (
               <div
                 key={message.id}
