@@ -5,7 +5,7 @@ export const Footer = () => {
     return (
         <>
         <section className="mt-24">
-        <Container className="container mx-auto">
+        <Container className="container mx-auto ">
           <div className="w-[100%] h-[1.5px] bg-slate-600">
             <div className="px-2" />
           </div>
