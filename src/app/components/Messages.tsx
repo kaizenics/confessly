@@ -49,7 +49,7 @@ export const Messages = () => {
             {msgs.map((message) => (
               <div
                 key={message.id}
-                className="w-[100%] h-[180px] sm:h-[280px] mb-4 sm:mb-1 box-border border-2 border-slate-600 bg-gray-900 flex flex-col justify-between items-center rounded-md"
+                className="w-[100%] h-[180px] sm:h-[280px] mb-1 box-border border-2 border-slate-600 bg-gray-900 flex flex-col justify-between items-center rounded-md"
               >
                 <p className="max-w-prose line-clamp-6 font-montserrat font-regular text-md text-white py-5 px-5">
                   {message.text}
