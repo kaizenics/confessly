@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Container } from "~/app/components/ui/Container";
 import { IoMdClose } from "react-icons/io";
-import PuffLoader from "react-spinners/PuffLoader";
+import MoonLoader from "react-spinners/MoonLoader";
 
 import { db } from "~/app/firebase";
 import { onSnapshot, collection, orderBy, query } from "firebase/firestore";
@@ -56,7 +56,7 @@ export const Messages = () => {
       <Container className="max-w-7xl xl:px-14 container flex justify-center items-center">
         { loading ? 
           <div className="flex justify-center items-center mt-24 sm:mt-14">
-            <PuffLoader color="#ffffff" loading={loading} size={120} />
+            <MoonLoader color="#ffffff" loading={loading} size={100} />
           </div>
         :
         <div className="flex flex-col justify-between items-center my-14">

@@ -3,7 +3,7 @@ import { Container } from "~/app/components/ui/Container";
 export const Footer = () => {
   return (
     <>
-      <section className="mt-24">
+      <section className="sm:mt-20">
         <Container className="max-w-7xl container mx-auto ">
           <div className="w-[100%] h-[1.5px] bg-slate-600">
             <div className="px-2" />

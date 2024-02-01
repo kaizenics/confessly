@@ -6,7 +6,7 @@ import { Footer } from "~/app/components/Footer";
 import { Header } from "~/app/components/Header";
 import { IoMdClose } from "react-icons/io";
 import { Toaster, toast } from "sonner";
-import PuffLoader from "react-spinners/PuffLoader";
+import MoonLoader from "react-spinners/MoonLoader";
 
 import { db, updateDoc } from "~/app/firebase";
 import {
@@ -100,9 +100,13 @@ export default function MyMessages() {
       <Header />
       <Toaster richColors position="bottom-center" />
       <Container className="max-w-7xl xl:px-14 container flex justify-center items-center">
-        {loading ? (
+        {!user ? (
+          <div className="text-center my-14 font-montserrat font-semibold text-md text-white">
+            Please Sign-in to view the My messages page
+          </div>
+        ) : loading ? (
           <div className="flex justify-center items-center mt-24 sm:mt-14">
-            <PuffLoader color="#ffffff" loading={loading} size={120} />
+            <MoonLoader color="#ffffff" loading={loading} size={100} />
           </div>
         ) : (
           <div className="flex flex-col justify-between items-center my-14">
