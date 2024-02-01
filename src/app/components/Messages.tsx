@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Container } from "~/app/components/ui/Container";
 import { IoMdClose } from "react-icons/io";
+import PuffLoader from "react-spinners/PuffLoader";
 
 import { db } from "~/app/firebase";
 import { onSnapshot, collection, orderBy, query } from "firebase/firestore";
@@ -18,6 +19,7 @@ export const Messages = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState("");
   const [msgs, setMsgs] = useState<Messages[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const handleReadMore = (message: string) => {
     setSelectedMessage(message);
@@ -41,9 +43,22 @@ export const Messages = () => {
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {  
+      setLoading(false);
+    }, 3000)
+  }, [])
+
+
   return (
     <>
       <Container className="max-w-7xl xl:px-14 container flex justify-center items-center">
+        { loading ? 
+          <div className="flex justify-center items-center mt-24 sm:mt-14">
+            <PuffLoader color="#ffffff" loading={loading} size={120} />
+          </div>
+        :
         <div className="flex flex-col justify-between items-center my-14">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
             {msgs.map((message) => (
@@ -69,6 +84,7 @@ export const Messages = () => {
             ))}
           </div>
         </div>
+}
       </Container>
 
       {showModal && (

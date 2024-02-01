@@ -6,6 +6,7 @@ import { Footer } from "~/app/components/Footer";
 import { Header } from "~/app/components/Header";
 import { IoMdClose } from "react-icons/io";
 import { Toaster, toast } from "sonner";
+import PuffLoader from "react-spinners/PuffLoader";
 
 import { db, updateDoc } from "~/app/firebase";
 import {
@@ -29,6 +30,7 @@ export default function MyMessages() {
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
   const { user } = UserAuth();
   const [mymsgs, setMyMsgs] = useState<Message[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const handleReadMore = (message: Message) => {
     setSelectedMessage(message);
@@ -86,41 +88,54 @@ export default function MyMessages() {
     }
   }, [user]);
 
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }, []);
+
   return (
     <main>
       <Header />
       <Toaster richColors position="bottom-center" />
       <Container className="max-w-7xl xl:px-14 container flex justify-center items-center">
-        <div className="flex flex-col justify-between items-center my-14">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
-            {mymsgs.map((message) => (
-              <div
-                key={message.id}
-                className="w-[100%] h-[180px] sm:h-[280px] mb-1 box-border border-2 border-slate-600 bg-gray-900 flex flex-col justify-between items-center rounded-md"
-              >
-                <p className="max-w-prose line-clamp-3 sm:line-clamp-6 font-montserrat font-regular text-md text-white py-5 px-5">
-                  {message.text}
-                </p>
-                <div className="w-full">
-                  <div className="flex border-t-2 justify-between border-slate-600">
-                    <button
-                      className="font-montserrat font-semibold text-sm sm:text-md text-white hover:text-gray-300 py-3 px-3 cursor-pointer"
-                      onClick={() => handleReadMore(message)}
-                    >
-                      Edit Message
-                    </button>
-                    <button
-                      className="font-montserrat font-regular text-md text-red-400 hover:text-red-500  text-right py-3 px-5 cursor-pointer"
-                      onClick={() => handleDeleteMessage(message.id)}
-                    >
-                      Delete Message
-                    </button>
+        {loading ? (
+          <div className="flex justify-center items-center mt-24 sm:mt-14">
+            <PuffLoader color="#ffffff" loading={loading} size={120} />
+          </div>
+        ) : (
+          <div className="flex flex-col justify-between items-center my-14">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
+              {mymsgs.map((message) => (
+                <div
+                  key={message.id}
+                  className="w-[100%] h-[180px] sm:h-[280px] mb-1 box-border border-2 border-slate-600 bg-gray-900 flex flex-col justify-between items-center rounded-md"
+                >
+                  <p className="max-w-prose line-clamp-3 sm:line-clamp-6 font-montserrat font-regular text-md text-white py-5 px-5">
+                    {message.text}
+                  </p>
+                  <div className="w-full">
+                    <div className="flex border-t-2 justify-between border-slate-600">
+                      <button
+                        className="font-montserrat font-semibold text-sm sm:text-md text-white hover:text-gray-300 py-3 px-3 cursor-pointer"
+                        onClick={() => handleReadMore(message)}
+                      >
+                        Edit Message
+                      </button>
+                      <button
+                        className="font-montserrat font-regular text-md text-red-400 hover:text-red-500  text-right py-3 px-5 cursor-pointer"
+                        onClick={() => handleDeleteMessage(message.id)}
+                      >
+                        Delete Message
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </Container>
 
       {showModal && selectedMessage && (
@@ -141,9 +156,12 @@ export default function MyMessages() {
                 setSelectedMessage({ ...selectedMessage, text: e.target.value })
               }
             />
-            <button 
-            className="font-montserrat font-semibold text-white border-2 border-emerald-600 bg-transparent px-3 py-2 rounded-md mt-2 mr-2 flex items-center hover:text-gray-400 hover:border-green-800"
-            onClick={handleSaveMessage}>Save</button>
+            <button
+              className="font-montserrat font-semibold text-white border-2 border-emerald-600 bg-transparent px-3 py-2 rounded-md mt-2 mr-2 flex items-center hover:text-gray-400 hover:border-green-800"
+              onClick={handleSaveMessage}
+            >
+              Save
+            </button>
           </div>
         </div>
       )}
