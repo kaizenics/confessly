@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Container } from "~/app/components/ui/Container";
+import { Footer } from "~/app/components/Footer";
 import { Header } from "~/app/components/Header";
 import { IoMdClose } from "react-icons/io";
 
@@ -52,13 +53,13 @@ const handleReadMore = (message: string) => {
   return (
     <main>
         <Header />
-      <Container className="container flex justify-center items-center px-6 xl:px-0">
-        <div className="flex flex-col md:block lg:flex-row xl:flex-row justify-between items-center my-10">
-          <div className="lg:mx-24 xl:mx-7 grid grid-cols-4 gap-5">
+      <Container className="max-w-7xl xl:px-14 container flex justify-center items-center">
+        <div className="flex flex-col justify-between items-center my-14">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
             {mymsgs.map((message) => (
               <div
                 key={message.id}
-                className="w-[360px] h-[280px] box-border border-2 border-slate-600 bg-gray-900 flex flex-col justify-between items-center rounded-md"
+                className="w-[100%] h-[180px] sm:h-[280px] mb-1 box-border border-2 border-slate-600 bg-gray-900 flex flex-col justify-between items-center rounded-md"
               >
                 <p className="max-w-prose line-clamp-6 font-montserrat font-regular text-md text-white py-5 px-5">
                   {message.text}
@@ -66,7 +67,7 @@ const handleReadMore = (message: string) => {
                 <div className="w-full">
                   <div className="flex border-t-2 justify-between border-slate-600">
                     <button
-                      className="font-montserrat font-semibold text-md text-red-400 hover:text-red-500 text-right py-3 px-5 cursor-pointer"
+                      className="font-montserrat font-semibold text-sm sm:text-md text-red-400 hover:text-red-500 py-3 px-3 cursor-pointer"
                       onClick={() => handleReadMore(message.text)}
                     >
                       Read more
@@ -99,7 +100,7 @@ const handleReadMore = (message: string) => {
           </div>
         </div>
       )}
-    
+     <Footer/>
     </main>
   );
 }   

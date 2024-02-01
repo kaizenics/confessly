@@ -57,12 +57,12 @@ export const Messages = () => {
                 <div className="w-full">
                   <div className="flex border-t-2 justify-between border-slate-600 ">
                     <button
-                      className="font-montserrat font-semibold text-sm sm:text-md text-red-400 hover:text-red-500 py-3 px-3  cursor-pointer"
+                      className="font-montserrat font-semibold text-sm sm:text-md text-red-400 hover:text-red-500 py-3 px-3 cursor-pointer"
                       onClick={() => handleReadMore(message.text)}
                     >
                       Read more
                     </button>
-                    <p className=" font-montserrat font-regular text-md text-white text-right py-3 px-5">
+                    <p className="font-montserrat font-regular text-md text-white text-right py-3 px-5">
                       {message.date}
                     </p>
                   </div>
