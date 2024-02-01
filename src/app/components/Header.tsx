@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Container } from "~/app/components/ui/Container";
 import { FcGoogle } from "react-icons/fc";
+import { Toaster, toast } from 'sonner'
 import hearts from "~/assets/hearts.png";
 
 import { addDoc, collection } from "firebase/firestore";
@@ -22,6 +23,7 @@ export const Header = () => {
 
   const handleSignIn = async () => {
     try {
+      toast.info("Signing in...")
       await googleSignIn();
     } catch (error) {
       console.log(error);
@@ -30,7 +32,7 @@ export const Header = () => {
 
   const handleLogout = async () => {
     try {
-      alert("You have been logged out");
+      toast.success("Successfully logged out")
       await logOut();
     } catch (error) {
       console.error(error);
@@ -39,7 +41,7 @@ export const Header = () => {
 
   const handlePostMessage = async () => {
     if (message.trim() === "") {
-      alert("Please enter a message");
+      toast.warning("Please enter a message")
       return;
     }
 
@@ -50,6 +52,7 @@ export const Header = () => {
         date: new Date().toLocaleDateString(),
         userId: user.uid,
       });
+      toast.success("Successfully posted message")
       setMessage("");
     } catch (error) {
       console.error(error);
@@ -59,6 +62,10 @@ export const Header = () => {
   return (
     <div>
       <Container className="container mx-auto">
+        <Toaster 
+        richColors
+        position="bottom-center"
+         />
         <main className="flex justify-center items-center flex-row mt-32 sm:mt-28 sm:mb-14 ">
           <div className="top-8 -z-10 absolute sm:hidden">
             <Image
