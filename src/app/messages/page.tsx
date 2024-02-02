@@ -92,14 +92,14 @@ export default function MyMessages() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 2500);
   }, []);
 
   return (
     <main>
       <Header />
       <Toaster richColors position="bottom-center" />
-      <Container className="max-w-7xl xl:px-14 container flex justify-center items-center">
+      <Container className="max-w-7xl container flex justify-center items-center">
         {!user ? (
           <div className="text-center my-14 font-montserrat font-semibold text-md text-white">
             Please Sign-in to view the My messages page
@@ -114,28 +114,27 @@ export default function MyMessages() {
               {mymsgs.map((message) => (
                 <div
                   key={message.id}
-                  className="w-[100%] h-[180px] sm:h-[280px] mb-1 box-border border-2 border-slate-600 bg-gray-900 flex flex-col justify-between items-center rounded-md"
+                  className="w-[100%] h-[180px] sm:h-[280px] mb-1 sbox-border border-2 border-slate-600 bg-gray-900 flex flex-col justify-between items-center rounded-md"
                 >
-                  <p className="max-w-prose line-clamp-3 sm:line-clamp-6 font-montserrat font-regular text-md text-white py-5 px-5">
+                  <p className="w-full max-w-prose line-clamp-3 sm:line-clamp-6 font-montserrat font-regular text-md text-center text-white py-5 px-5">
                     {message.text}
                   </p>
-                  <div className="w-full">
-                    <div className="flex border-t-2 justify-between border-slate-600">
+                  
+                    <div className="w-full flex border-t-2 mx-14 sm:mx-40 justify-between border-slate-600">
                       <button
-                        className="font-montserrat font-semibold text-sm sm:text-md text-white hover:text-gray-300 py-3 px-3 cursor-pointer"
+                        className="font-montserrat font-semibold text-sm  sm:text-md text-white hover:text-gray-300 py-3 px-3 cursor-pointer"
                         onClick={() => handleReadMore(message)}
                       >
-                        Edit Message
+                        Edit
                       </button>
                       <button
                         className="font-montserrat font-regular text-md text-red-400 hover:text-red-500  text-right py-3 px-5 cursor-pointer"
                         onClick={() => handleDeleteMessage(message.id)}
                       >
-                        Delete Message
+                        Delete
                       </button>
                     </div>
                   </div>
-                </div>
               ))}
             </div>
           </div>
