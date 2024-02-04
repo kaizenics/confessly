@@ -10,7 +10,7 @@ import { onSnapshot, collection, orderBy, query } from "firebase/firestore";
 
 type Messages = {
   id: string;
-  text: string; 
+  text: string;
   date: string;
   name: string;
 };
@@ -33,60 +33,59 @@ export const Messages = () => {
 
   useEffect(() => {
     const q = query(collection(db, "messages"), orderBy("date", "asc"));
-  
+
     const unsubscribe = onSnapshot(q, (snapshot) => {
       setMsgs(
-        snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })) as Messages[]
+        snapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        })) as Messages[]
       );
     });
-  
+
     return () => unsubscribe();
   }, []);
 
   useEffect(() => {
     setLoading(true);
-    setTimeout(() => {  
+    setTimeout(() => {
       setLoading(false);
-    }, 2500)
-  }, [])
-
+    }, 2500);
+  }, []);
 
   return (
     <>
       <Container className="max-w-7xl xl:px-14 container flex justify-center items-center">
-        { loading ? 
+        {loading ? (
           <div className="flex justify-center items-center mt-24 sm:mt-14">
             <MoonLoader color="#ffffff" loading={loading} size={100} />
           </div>
-        :
-        <div className="flex flex-col justify-between items-center my-14">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
-            {msgs.map((message) => (
-              <div
-                key={message.id}
-                className="w-full h-[180px] sm:h-[280px] mb-1 box-border border-2 border-slate-600 bg-gray-900 flex flex-col justify-between items-center rounded-md"
-              >
-                <p className="w-full max-w-prose line-clamp-3 sm:line-clamp-6 font-montserrat font-regular text-center text-md text-white py-5 px-5">
-                  {message.text}
-                </p>
-                <div className="w-full">
-                  <div className="flex border-t-2 justify-between border-slate-600 ">
+        ) : (
+          <div className="flex flex-col justify-between items-center my-14">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
+              {msgs.map((message) => (
+                <div
+                  key={message.id}
+                  className="w-full h-[180px] sm:h-[280px] mb-1 box-border border border-slate-600 bg-gray-900 flex flex-col justify-between items-center rounded-md"
+                >
+                  <p className="w-full max-w-prose line-clamp-3 sm:line-clamp-6 font-montserrat font-regular text-center text-md text-white py-5 px-5">
+                    {message.text}
+                  </p>
+
+                  <div className="w-full flex border-t justify-between mx-14 sm:mx-40 border-slate-600">
                     <button
                       className="font-montserrat font-semibold text-sm sm:text-md text-red-400 hover:text-red-500 py-3 px-3 cursor-pointer"
                       onClick={() => handleReadMore(message.text)}
                     >
                       Read more
                     </button>
-                   
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-}
+        )}
       </Container>
-      
 
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

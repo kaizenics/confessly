@@ -3,7 +3,8 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Container } from "~/app/components/ui/Container";
 import { FcGoogle } from "react-icons/fc";
-import { Toaster, toast } from 'sonner'
+import { Toaster, toast } from "sonner";
+import { IoMdSettings } from "react-icons/io";
 import hearts from "~/assets/hearts.png";
 
 import { addDoc, collection } from "firebase/firestore";
@@ -13,7 +14,12 @@ import { db } from "~/app/firebase";
 export const Header = () => {
   const { user, googleSignIn, logOut } = UserAuth();
   const [message, setMessage] = useState("");
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
   const router = useRouter();
+
+  const handleToggleDropdown = () => {
+    setDropdownVisible(!isDropdownVisible);
+  };
 
   useEffect(() => {
     if (user) {
@@ -23,7 +29,7 @@ export const Header = () => {
 
   const handleSignIn = async () => {
     try {
-      toast.info("Signing in...")
+      toast.info("Signing in...");
       await googleSignIn();
     } catch (error) {
       console.log(error);
@@ -32,7 +38,7 @@ export const Header = () => {
 
   const handleLogout = async () => {
     try {
-      toast.success("Successfully logged out")
+      toast.success("Successfully logged out");
       await logOut();
     } catch (error) {
       console.error(error);
@@ -41,7 +47,7 @@ export const Header = () => {
 
   const handlePostMessage = async () => {
     if (message.trim() === "") {
-      toast.warning("Please enter a message")
+      toast.warning("Please enter a message");
       return;
     }
 
@@ -52,22 +58,17 @@ export const Header = () => {
         date: new Date().toLocaleDateString(),
         userId: user.uid,
       });
-      toast.success("Successfully posted message")
+      toast.success("Successfully posted message");
       setMessage("");
     } catch (error) {
       console.error(error);
     }
   };
 
-  
-
   return (
     <div>
       <Container className="container mx-auto">
-        <Toaster 
-        richColors
-        position="bottom-center"
-         />
+        <Toaster richColors position="bottom-center" />
         <main className="flex justify-center items-center flex-row mt-32 sm:mt-28 sm:mb-14 ">
           <div className="top-8 -z-10 absolute sm:hidden">
             <Image
@@ -114,35 +115,55 @@ export const Header = () => {
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="Start putting messages here"
-                    className="xl:m-0 border-2 border-slate-600 bg-gray-900 font-montserrat font-regular text-white w-[100%] h-[130px] sm:h-[100px] rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-red-300 resize-none"
+                    className="xl:m-0 bg-gray-900 font-montserrat font-regular text-white w-[100%] h-[130px] sm:h-[100px] rounded-md px-4 py-3 focus:outline-none focus:ring-1 focus:ring-slate-600 resize-none"
                   />
                 </div>
-                <div className="flex flex-wrap justify-center sm:justify-normal">
+                <div className="flex flex-wrap justify-center sm:justify-normal relative">
                   <button
                     onClick={handlePostMessage}
-                    className="font-montserrat font-semibold text-white border-2 border-slate-600 bg-transparent px-4 lg:py-3 rounded-md mt-2 mr-2 flex items-center hover:text-gray-400 hover:border-slate-800"
+                    className="font-montserrat text-sm font-semibold text-white bg-gradient-to-t from-red-400 to-red-400 px-3 py- rounded-md mt-2 mr-2 flex items-center hover:bg-gradient-to-b from-red-500 to-red-500"
                   >
-                    Post your message
+                    Save Message
                   </button>
                   <button
-                    onClick={() => router.push("/")}
-                    className="font-montserrat font-semibold text-white text-md border-2 border-slate-600 bg-transparent px-4 py-3 rounded-md mt-2 mr-2 flex items-center hover:text-gray-400 hover:border-slate-800"
+                    onClick={() => toast.info("Live chat feature coming soon")}
+                    className="font-montserrat font-semibold text-white text-sm border border-slate-600 bg-transparent px-4 py-3 rounded-md mt-2 mr-2 flex items-center hover:text-gray-400 hover:border-slate-800"
                   >
-                    All
+                    Live Chat
                   </button>
                   <button
-                    onClick={() => router.push("/messages")}
-                    className="font-montserrat font-semibold text-white text-md border-2 border-slate-600 bg-transparent px-4 py-3 rounded-md mt-2 mr-2 flex items-center hover:text-gray-400 hover:border-slate-800"
+                    className="font-montserrat text-sm font-semibold text-white border border-slate-600 px-3 py- rounded-md mt-2 mr-2 flex items-center hover:text-gray-400 hover:border-slate-800"
+                    onClick={handleToggleDropdown}
                   >
-                    My messages
-                  </button>
-                  <button
-                    className="font-montserrat font-semibold text-red-500 text-md border-2 border-red-500 bg-transparent px-4 py-3 rounded-md mt-2 flex items-center hover:text-red-900 hover:border-red-900"
-                    onClick={handleLogout}
-                  >
-                    Log out
+                    <IoMdSettings className="w-[20px] h-[20px]" />
                   </button>
                 </div>
+                <div
+                    className={`absolute left-[130px] md:left-[240px] mt-2 w-40 bg-gray-900 rounded-md overflow-hidden shadow-xl z-10 ${
+                      isDropdownVisible ? "block" : "hidden"
+                    }`}
+                  >
+                    <div className="my-2">
+                      <p
+                        onClick={() => router.push("/")}
+                        className="font-montserrat font-semibold text-white text-sm bg-transparent px-4 py-3 flex items-center hover:text-gray-400 hover:border-slate-800 cursor-pointer"
+                      >
+                        All Messages
+                      </p>
+                      <p
+                        onClick={() => router.push("/messages")}
+                        className="font-montserrat font-semibold text-white text-sm bg-transparent px-4 py-3 flex items-center hover:text-gray-400 hover:border-slate-800 cursor-pointer"
+                      >
+                        My messages
+                      </p>
+                      <p
+                        className="font-montserrat text-sm font-semibold text-red-500 text-md bg-transparent px-4 py-3 flex items-center hover:text-red-900 hover:border-red-900 cursor-pointer"
+                        onClick={handleLogout}
+                      >
+                        Log out
+                      </p>
+                    </div>
+                  </div>
               </div>
             )}
           </div>
