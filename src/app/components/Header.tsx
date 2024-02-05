@@ -121,18 +121,18 @@ export const Header = () => {
                 <div className="flex flex-wrap justify-center sm:justify-normal relative">
                   <button
                     onClick={handlePostMessage}
-                    className="font-montserrat text-sm font-semibold text-white bg-gradient-to-t from-red-400 to-red-400 px-3 py- rounded-md mt-2 mr-2 flex items-center hover:bg-gradient-to-b from-red-500 to-red-500"
+                    className="font-montserrat text-sm font-semibold text-white bg-red-500 px-3 py- rounded-md mt-2 mr-2 flex items-center hover:bg-red-600"
                   >
                     Save Message
                   </button>
                   <button
                     onClick={() => toast.info("Live chat feature coming soon")}
-                    className="font-montserrat font-semibold text-white text-sm border border-slate-600 bg-transparent px-4 py-3 rounded-md mt-2 mr-2 flex items-center hover:text-gray-400 hover:border-slate-800"
+                    className="font-montserrat font-semibold text-white text-sm border border-slate-600 bg-transparent px-4 py-3 rounded-md mt-2 mr-2 flex items-center hover:text-gray-400"
                   >
                     Live Chat
                   </button>
                   <button
-                    className="font-montserrat text-sm font-semibold text-white border border-slate-600 px-3 py- rounded-md mt-2 mr-2 flex items-center hover:text-gray-400 hover:border-slate-800"
+                    className="font-montserrat text-sm font-semibold text-white border border-slate-600 px-3 py- rounded-md mt-2 mr-2 flex items-center hover:text-gray-400"
                     onClick={handleToggleDropdown}
                   >
                     <IoMdSettings className="w-[20px] h-[20px]" />
