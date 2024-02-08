@@ -20,7 +20,9 @@ export const Messages = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState("");
   const [msgs, setMsgs] = useState<Messages[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [displayedMessages, setDisplayedMessages] = useState<Messages[]>([]);
+  const [loadMore, setLoadMore] = useState(false);
 
   const handleReadMore = (message: string) => {
     setSelectedMessage(message);
@@ -34,7 +36,7 @@ export const Messages = () => {
 
   useEffect(() => {
     const q = query(collection(db, "messages"), orderBy("time", "desc"));
-    
+  
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const newMessages = snapshot.docs.map((doc) => ({
         ...doc.data(),
@@ -42,21 +44,39 @@ export const Messages = () => {
       })) as Messages[];
   
       setMsgs((prevMessages) => {
-      
-        return [...newMessages.reverse(), ...prevMessages];
+        return [...newMessages, ...prevMessages];
       });
+  
+      setLoading(false);
     });
-    
+  
     return () => unsubscribe();
   }, []);
   
-  
+
   useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2500);
-  }, []);
+    if (msgs.length > 0) {
+      setDisplayedMessages(msgs.slice(0, 9));
+      setLoadMore(msgs.length > 9);
+    }
+  }, [msgs]);
+
+  const handleLoadMore = () => {
+    const currentlyDisplayedCount = displayedMessages.length;
+    const remainingMessages = msgs.slice(
+      currentlyDisplayedCount,
+      currentlyDisplayedCount + 9
+    );
+
+    setDisplayedMessages((prevMessages) => [
+      ...prevMessages,
+      ...remainingMessages,
+    ]);
+
+    if (msgs.length <= currentlyDisplayedCount + 9) {
+      setLoadMore(false);
+    }
+  };
 
   return (
     <>
@@ -68,27 +88,37 @@ export const Messages = () => {
         ) : (
           <div className="flex flex-col justify-between items-center my-14">
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
-              {msgs.slice(0).reverse().map((message) => (
-                <div
-                  key={message.id}
-                  className="w-full h-[180px] sm:h-[280px] mb-1 box-border border border-slate-600 bg-gray-900 flex flex-col justify-between items-center rounded-md"
-                >
-                  <p className="w-full max-w-prose line-clamp-3 sm:line-clamp-6 font-montserrat font-regular text-center text-md text-white py-5 px-5">
-                    {message.text}
-                  </p>
+              {displayedMessages.reverse().map((message) => (
+                  <div
+                    key={message.id}
+                    className="w-full h-[180px] sm:h-[280px] mb-1 box-border border border-slate-600 bg-gray-900 flex flex-col justify-between items-center rounded-md"
+                  >
+                    <p className="w-full max-w-prose line-clamp-3 sm:line-clamp-6 font-montserrat font-regular text-center text-md text-white py-5 px-5">
+                      {message.text}
+                    </p>
 
-                  <div className="w-full flex border-t justify-between mx-20 sm:mx-40 border-slate-600">
-                    <button
-                      className="font-montserrat font-semibold text-sm sm:text-md text-red-400 hover:text-red-500 py-3 px-3 cursor-pointer"
-                      onClick={() => handleReadMore(message.text)}
-                    >
-                      Read more
-                    </button>
-                    <p className="font-montserrat font-regular text-sm sm:text-md text-white py-3 px-3">{message.date}</p>
+                    <div className="w-full flex border-t justify-between mx-20 sm:mx-40 border-slate-600">
+                      <button
+                        className="font-montserrat font-semibold text-sm sm:text-md text-red-400 hover:text-red-500 py-3 px-3 cursor-pointer"
+                        onClick={() => handleReadMore(message.text)}
+                      >
+                        Read more
+                      </button>
+                      <p className="font-montserrat font-regular text-sm sm:text-md text-white py-3 px-3">
+                        {message.date}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
+            {loadMore && (
+              <button
+                className="font-montserrat font-semibold text-sm text-white border border-slate-600 bg-transparent px-4 py-3 rounded-md mt-4"
+                onClick={handleLoadMore}
+              >
+                Load More
+              </button>
+            )}
           </div>
         )}
       </Container>

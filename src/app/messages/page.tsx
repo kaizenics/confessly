@@ -16,12 +16,14 @@ import {
   where,
   doc,
   deleteDoc,
+  orderBy
 } from "firebase/firestore";
 import { UserAuth } from "~/context/AuthContext";
 
 type Message = {
   id: string;
   text: string;
+  time: string;
   date: string;
 };
 
@@ -30,7 +32,7 @@ export default function MyMessages() {
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
   const { user } = UserAuth();
   const [mymsgs, setMyMsgs] = useState<Message[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const handleReadMore = (message: Message) => {
     setSelectedMessage(message);
@@ -69,7 +71,7 @@ export default function MyMessages() {
     if (user) {
       const q = query(
         collection(db, "messages"),
-        where("userId", "==", user.uid)
+        where("userId", "==", user.uid),
       );
 
       const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -82,18 +84,12 @@ export default function MyMessages() {
               } as Message)
           )
         );
+        setLoading(false);
       });
 
       return () => unsubscribe();
     }
   }, [user]);
-
-  useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2500);
-  }, []);
 
   return (
     <main>
@@ -111,7 +107,7 @@ export default function MyMessages() {
         ) : (
           <div className="flex flex-col justify-between items-center my-14">
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
-              {mymsgs.map((message) => (
+              {mymsgs.reverse().map((message) => (
                 <div
                   key={message.id}
                   className="w-[100%] h-[180px] sm:h-[280px] mb-1 box-border border border-slate-600 bg-gray-900 flex flex-col justify-between items-center rounded-md"

@@ -65,10 +65,11 @@ export const Header = () => {
         time: time,
         userId: user.uid,
       });
+
       toast.success("Successfully posted message");
-      window.location.reload();
       setMessage("");
     } catch (error) {
+      toast.error("Error posting message");
       console.error(error);
     }
   };
