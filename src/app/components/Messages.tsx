@@ -32,20 +32,24 @@ export const Messages = () => {
   };
 
   useEffect(() => {
-    const q = query(collection(db, "messages"), orderBy("date", "asc"));
-
+    const q = query(collection(db, "messages"), orderBy("date", "desc"));
+    
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      setMsgs(
-        snapshot.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        })) as Messages[]
-      );
+      const newMessages = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      })) as Messages[];
+  
+      setMsgs((prevMessages) => {
+      
+        return [...newMessages.reverse(), ...prevMessages];
+      });
     });
-
+    
     return () => unsubscribe();
   }, []);
-
+  
+  
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
@@ -63,7 +67,7 @@ export const Messages = () => {
         ) : (
           <div className="flex flex-col justify-between items-center my-14">
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
-              {msgs.map((message) => (
+              {msgs.slice(0).reverse().map((message) => (
                 <div
                   key={message.id}
                   className="w-full h-[180px] sm:h-[280px] mb-1 box-border border border-slate-600 bg-gray-900 flex flex-col justify-between items-center rounded-md"

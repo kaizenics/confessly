@@ -50,12 +50,17 @@ export const Header = () => {
       toast.warning("Please enter a message");
       return;
     }
-
+  
     try {
+      // Get current date and time in Philippine time zone
+      const philippinesDate = new Date().toLocaleString("en-PH", {
+        timeZone: "Asia/Manila",
+      });
+  
       await addDoc(collection(db, "messages"), {
         name: user.displayName,
         text: message,
-        date: new Date().toLocaleDateString(),
+        date: philippinesDate,
         userId: user.uid,
       });
       toast.success("Successfully posted message");
