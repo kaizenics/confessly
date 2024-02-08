@@ -65,9 +65,9 @@ export const Header = () => {
         time: time,
         userId: user.uid,
       });
-
+      
       toast.success("Successfully posted message");
-      setMessage("");
+     
     } catch (error) {
       toast.error("Error posting message");
       console.error(error);
