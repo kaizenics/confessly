@@ -120,7 +120,7 @@ export default function MyMessages() {
                     {message.text}
                   </p>
 
-                  <div className="w-full flex border-t mx-14 sm:mx-40 justify-between border-slate-600">
+                  <div className="w-full flex border-t mx-20 sm:mx-28 justify-between border-slate-600">
                     <button
                       className="font-montserrat font-semibold text-sm sm:text-md text-white hover:text-gray-300 py-3 px-3 cursor-pointer"
                       onClick={() => handleReadMore(message)}

@@ -52,7 +52,6 @@ export const Header = () => {
     }
   
     try {
-      // Get current date and time in Philippine time zone
       const philippinesDate = new Date().toLocaleString("en-PH", {
         timeZone: "Asia/Manila",
       });
