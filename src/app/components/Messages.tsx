@@ -11,6 +11,7 @@ import { onSnapshot, collection, orderBy, query } from "firebase/firestore";
 type Messages = {
   id: string;
   text: string;
+  time: string;
   date: string;
   name: string;
 };
@@ -32,7 +33,7 @@ export const Messages = () => {
   };
 
   useEffect(() => {
-    const q = query(collection(db, "messages"), orderBy("date", "desc"));
+    const q = query(collection(db, "messages"), orderBy("time", "desc"));
     
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const newMessages = snapshot.docs.map((doc) => ({
@@ -83,7 +84,7 @@ export const Messages = () => {
                     >
                       Read more
                     </button>
-                    <p className="font-montserrat font-regular text-sm sm:text-md text-white py-3 px-3">02/1/2024</p>
+                    <p className="font-montserrat font-regular text-sm sm:text-md text-white py-3 px-3">{message.date}</p>
                   </div>
                 </div>
               ))}

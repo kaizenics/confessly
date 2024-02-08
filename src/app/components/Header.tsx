@@ -52,22 +52,27 @@ export const Header = () => {
     }
   
     try {
-      const philippinesDate = new Date().toLocaleString("en-PH", {
+      const philippinesDateTime = new Date().toLocaleString("en-PH", {
         timeZone: "Asia/Manila",
       });
   
+      const [date, time] = philippinesDateTime.split(", ");
+      
       await addDoc(collection(db, "messages"), {
         name: user.displayName,
         text: message,
-        date: philippinesDate,
+        date: date,
+        time: time,
         userId: user.uid,
       });
       toast.success("Successfully posted message");
+      window.location.reload();
       setMessage("");
     } catch (error) {
       console.error(error);
     }
   };
+  
 
   return (
     <div>
