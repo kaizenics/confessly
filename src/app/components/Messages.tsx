@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import { Container } from "~/app/components/ui/Container";
 import { IoMdClose } from "react-icons/io";
@@ -22,7 +20,6 @@ export const Messages = () => {
   const [msgs, setMsgs] = useState<Messages[]>([]);
   const [loading, setLoading] = useState(true);
   const [displayedMessages, setDisplayedMessages] = useState<Messages[]>([]);
-  const [loadMore, setLoadMore] = useState(false);
 
   const handleReadMore = (message: string) => {
     setSelectedMessage(message);
@@ -43,42 +40,16 @@ export const Messages = () => {
         id: doc.id,
       })) as Messages[];
   
-      setMsgs([]);
-  
-      setMsgs((prevMessages) => {
-        return [...newMessages, ...prevMessages];
-      });
-  
+      setMsgs(newMessages);
       setLoading(false);
     });
   
     return () => unsubscribe();
   }, []);
-  
 
   useEffect(() => {
-    if (msgs.length > 0) {
-      setDisplayedMessages(msgs.slice(0, 9));
-      setLoadMore(msgs.length > 9);
-    }
+    setDisplayedMessages(msgs);
   }, [msgs]);
-
-  const handleLoadMore = () => {
-    const currentlyDisplayedCount = displayedMessages.length;
-    const remainingMessages = msgs.slice(
-      currentlyDisplayedCount,
-      currentlyDisplayedCount + 9
-    );
-
-    setDisplayedMessages((prevMessages) => [
-      ...prevMessages,
-      ...remainingMessages,
-    ]);
-
-    if (msgs.length <= currentlyDisplayedCount + 9) {
-      setLoadMore(false);
-    }
-  };
 
   return (
     <>
@@ -113,14 +84,6 @@ export const Messages = () => {
                   </div>
                 ))}
             </div>
-            {loadMore && (
-              <button
-                className="font-montserrat font-semibold text-sm text-white border border-slate-600 bg-transparent px-4 py-3 rounded-md mt-4"
-                onClick={handleLoadMore}
-              >
-                Load More
-              </button>
-            )}
           </div>
         )}
       </Container>

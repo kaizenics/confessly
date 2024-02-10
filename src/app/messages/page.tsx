@@ -107,7 +107,7 @@ export default function MyMessages() {
         ) : (
           <div className="flex flex-col justify-between items-center my-14">
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
-              {mymsgs.reverse().map((message) => (
+              {mymsgs.map((message) => (
                 <div
                   key={message.id}
                   className="w-[100%] h-[180px] sm:h-[280px] mb-1 box-border border border-slate-600 bg-gray-900 flex flex-col justify-between items-center rounded-md"
