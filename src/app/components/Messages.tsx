@@ -39,7 +39,15 @@ export const Messages = () => {
         ...doc.data(),
         id: doc.id,
       })) as Messages[];
-  
+
+      const userMessageIndex = newMessages.findIndex(message => message.name === "user");
+
+      if (userMessageIndex !== -1) {
+        newMessages.splice(userMessageIndex, 1);
+
+        newMessages.unshift(newMessages[userMessageIndex]);
+      }
+
       setMsgs(newMessages);
       setLoading(false);
     });
