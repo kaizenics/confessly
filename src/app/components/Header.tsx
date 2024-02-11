@@ -7,7 +7,7 @@ import { Toaster, toast } from "sonner";
 import { IoMdSettings } from "react-icons/io";
 import hearts from "~/assets/hearts.png";
 
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { UserAuth } from "~/context/AuthContext";
 import { db } from "~/app/firebase";
 
@@ -63,6 +63,7 @@ export const Header = () => {
         text: message,
         date: date,
         time: time,
+        timestamp: serverTimestamp(),
         userId: user.uid,
       });
       

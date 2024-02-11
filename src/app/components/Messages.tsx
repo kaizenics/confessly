@@ -11,6 +11,7 @@ type Messages = {
   text: string;
   time: string;
   date: string;
+  timestamp: string;
   name: string;
 };
 
@@ -32,7 +33,7 @@ export const Messages = () => {
   };
 
   useEffect(() => {
-    const q = query(collection(db, "messages"), orderBy("time", "desc"));
+    const q = query(collection(db, "messages"), orderBy("timestamp", "desc"));
   
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const newMessages = snapshot.docs.map((doc) => ({
