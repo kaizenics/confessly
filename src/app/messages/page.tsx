@@ -116,18 +116,18 @@ export default function MyMessages() {
                     {message.text}
                   </p>
 
-                  <div className="w-full flex border-t mx-20 sm:mx-28 justify-between border-slate-600">
+                  <div className="w-full flex mx-20 sm:mx-28 justify-between border-slate-600">
                     <button
                       className="font-montserrat font-semibold text-sm sm:text-md text-white hover:text-gray-300 py-3 px-3 cursor-pointer"
                       onClick={() => handleReadMore(message)}
                     >
-                      Edit
+                      
                     </button>
                     <button
                       className="font-montserrat font-regular text-md text-red-400 hover:text-red-500  text-right py-3 px-5 cursor-pointer"
                       onClick={() => handleDeleteMessage(message.id)}
                     >
-                      Delete
+                      
                     </button>
                   </div>
                 </div>

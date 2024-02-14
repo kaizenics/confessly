@@ -23,7 +23,7 @@ export const Messages = () => {
   const [displayedMessages, setDisplayedMessages] = useState<Messages[]>([]);
 
   const handleReadMore = (message: string) => {
-    setSelectedMessage(message);
+    setSelectedMessage(message); 
     setShowModal(true);
   };
 
